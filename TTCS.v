@@ -43,6 +43,15 @@ module TrainTrafficControl #(
 
             default: next_state = IDLE;
         endcase
+        
+        case (state)
+            GRANT_T1: grant <= 3'b001;
+            GRANT_T2: grant <= 3'b010;
+            GRANT_T3: grant <= 3'b011;
+            GRANT_T4: grant <= 3'b100;
+            default:  grant <= 3'b000;
+        endcase
+        
     end
 
     always @(posedge clk or posedge reset) begin
@@ -57,17 +66,7 @@ module TrainTrafficControl #(
                 timer <= timer + 1;
             else
                 timer <= 0;
-
-          case (next_state)
-            GRANT_T1: grant <= 3'b001;
-            GRANT_T2: grant <= 3'b010;
-            GRANT_T3: grant <= 3'b011;
-            GRANT_T4: grant <= 3'b100;
-            default:  grant <= 3'b000;
-        endcase
-
         end
     end
-
 
 endmodule
